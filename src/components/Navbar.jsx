@@ -14,18 +14,17 @@ export const Navbar = () => {
     <nav className='navbar'>
         <div className='container'>
             
-        <Link to='/' className='nav-brand'>
+        <div className="brand">
         <img 
           src="public/images/Logo.png" 
           alt="logo" 
           width="60" 
           height="60" 
-          className="brand-footer" 
-        />
-        CreditSmart
-        </Link>
+          className="logo" />
+          <h1 className="logo">CreditSmart</h1>
+        </div>
 
-        <ul className='nav-menu'>
+        <ul className='menu'>
             <li>
                 <Link to='/' className={isActive('/')}>
                     Inicio
