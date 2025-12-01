@@ -15,12 +15,6 @@ export const Navbar = () => {
         <div className='container'>
             
         <div className="brand">
-        <img 
-          src="public/images/Logo.png" 
-          alt="logo" 
-          width="60" 
-          height="60" 
-          className="logo" />
           <h1 className="logo">CreditSmart</h1>
         </div>
 
