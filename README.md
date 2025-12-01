@@ -9,6 +9,12 @@ Este template proporciona una configuración mínima para hacer que React funcio
 ### Nombre del Estudiante
 Anderson Lopera Rodríguez
 
+## 🎥 Video de Sustentación
+
+Puedes ver la explicación completa del proyecto CreditSmart, su funcionalidad dinámica con React y las implementaciones de los filtros y formularios, en el siguiente enlace:
+
+[**Ver Video de Presentación**](https://drive.google.com/file/d/1grG3CVn7-As3EoSjJO4nn9xBDa2ybZee/view?usp=sharing)
+
 ### Descripción del Proyecto
 CreditSmart es una aplicación web dinámica construida con React que simula la gestión y presentación de productos crediticios. El objetivo principal es ofrecer a los usuarios una interfaz clara para explorar diferentes tipos de créditos (como "Crédito de libre inversión" y "Crédito de Vehículo"), ver sus detalles (tasas, montos, plazos) y utilizar una herramienta de simulación de préstamos.
 
