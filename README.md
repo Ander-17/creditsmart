@@ -35,8 +35,8 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión LTS recom
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://docs.github.com/es/repositories/creating-and-managing-repositories/quickstart-for-repositories](https://docs.github.com/es/repositories/creating-and-managing-repositories/quickstart-for-repositories)
-    cd creditsmart-project
+    git clone https://github.com/Ander-17/creditsmart.git
+    cd creditsmart
     ```
 
 2.  **Instalar dependencias:**
