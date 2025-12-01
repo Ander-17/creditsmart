@@ -1,17 +1,17 @@
 import React, { useState, useMemo } from 'react';
-// Asumimos que estos componentes están disponibles en las rutas definidas
+
 import { Hero } from '../components/Hero'; 
 import { CreditCard } from '../components/CreditCard';
 import { creditsData } from '../data/creditsData'; 
 
 
 export const Simulador = () => {
-  // 1. Estados para controlar los inputs del formulario
+
   const [searchTerm, setSearchTerm] = useState('');   
   const [minAmount, setMinAmount] = useState('');   
   const [sortType, setSortType] = useState('tasa_asc'); 
 
-  // Handler para actualizar el estado de los inputs
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'name-product') setSearchTerm(value);
@@ -19,25 +19,25 @@ export const Simulador = () => {
     if (name === 'sort-interest') setSortType(value); 
   };
   
-  // Función para limpiar la búsqueda y filtros
+
   const handleClearFilters = () => {
-    setSearchTerm(''); // Limpia el término de búsqueda
-    setMinAmount('');   // Limpia el monto
-    setSortType('tasa_asc'); // Restablece el ordenamiento
+    setSearchTerm(''); 
+    setMinAmount('');   
+    setSortType('tasa_asc'); 
   };
   
-  // 2. Lógica de Filtrado y Ordenamiento usando useMemo
+
   const filteredAndSortedCredits = useMemo(() => {
     let results = creditsData;
     
-    // A. Búsqueda (.filter()) por Nombre (Tiempo Real)
+    
     if (searchTerm) {
       results = results.filter(credit => 
         credit.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // B. Filtro (.filter()) por Monto (Rango)
+    
     const amountFilter = parseFloat(minAmount);
     if (!isNaN(amountFilter) && amountFilter > 0) {
       results = results.filter(credit => {
@@ -45,7 +45,7 @@ export const Simulador = () => {
       });
     }
     
-    // C. Ordenamiento (.sort()) (Tasa de Interés)
+
     const sorted = [...results];
     if (sortType === 'tasa_asc') {
       sorted.sort((a, b) => a.interestRate - b.interestRate);
@@ -103,7 +103,7 @@ export const Simulador = () => {
 
                 </form>
                 
-                {/* Botón para Limpiar Búsqueda, usando solo className */}
+
                 <button 
                     onClick={handleClearFilters}
                     className="btn-clear" 
@@ -121,7 +121,7 @@ export const Simulador = () => {
           <p>A continuación se muestran los {filteredAndSortedCredits.length} resultados que coinciden con tus filtros.</p>
           
           <div className="credits-grid">
-            {/* Renderizado (.map()) */}
+            
             {filteredAndSortedCredits.length > 0 ? (
               filteredAndSortedCredits.map((credit) => (
                 <CreditCard 
@@ -130,7 +130,7 @@ export const Simulador = () => {
                 />
               ))
             ) : (
-              // Requisito 2: Mostrar "No hay créditos disponibles"
+
               <p>
                 <strong>No hay créditos disponibles</strong> que coincidan con tu búsqueda y filtros. 
                 Intenta ajustar los parámetros.

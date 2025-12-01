@@ -1,14 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import Swal from 'sweetalert2'; 
-// Importamos los datos para obtener la tasa de interés dinámicamente
+
 import { creditsData } from '../data/creditsData'; 
 
 
-// NOTA: La tasa base fija se elimina. La obtenemos de creditsData.
 
 
-// Objeto de estado inicial para el formulario
-// Usamos el nombre del crédito del array de datos para que coincida con el <select>
 const initialFormState = {
   fullname: '',
   email: '',
@@ -23,7 +20,7 @@ const initialFormState = {
   ingresos: 0,
 };
 
-// Función auxiliar para formatear la moneda
+
 const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-CO', { 
         style: 'currency', 
@@ -32,7 +29,7 @@ const formatCurrency = (amount) => {
     }).format(amount);
 };
 
-// Función auxiliar para la validación del formulario
+
 const validateForm = (formData) => {
     let newErrors = {};
     if (formData.fullname.trim().length < 5) newErrors.fullname = "Nombre demasiado corto.";
@@ -47,35 +44,26 @@ export const Solicitud = () => {
   const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
 
-  // 1. CÁLCULO DE CUOTA MENSUAL ESTIMADA (Dinámico con la Tasa del Data)
   const cuotaMensual = useMemo(() => {
     const P = parseFloat(formData.monto);
     const n = parseInt(formData.plazo);
     
-    // Buscar el objeto de crédito seleccionado para obtener la tasa
     const selectedCredit = creditsData.find(c => c.name === formData.creditType);
 
-    // Obtener la tasa de interés (en porcentaje) y convertirla a decimal (ej: 1.5 -> 0.015)
-    // Usamos la tasa del data o 1.5% como fallback si no se encuentra
     const tasaPorcentaje = selectedCredit ? selectedCredit.interestRate : 1.5; 
-    const i = tasaPorcentaje / 100; // Tasa mensual en decimal
-
-    // Fórmula de Amortización (Cuota Fija)
+    const i = tasaPorcentaje / 100; 
     if (P > 0 && n > 0 && i > 0) {
       const cuota = P * (i * Math.pow(1 + i, n)) / (Math.pow(1 + i, n) - 1);
       return { cuota: Math.round(cuota), tasa: tasaPorcentaje };
     }
-    // Retorna 0 y la tasa por defecto si no se puede calcular
     return { cuota: 0, tasa: tasaPorcentaje };
     
-  }, [formData.monto, formData.plazo, formData.creditType]); // Dependencia clave: creditType
+  }, [formData.monto, formData.plazo, formData.creditType]); 
 
-  // Handler para inputs y validación en tiempo real
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Validación básica en tiempo real
     if (e.target.required && value.trim() === '') {
         setErrors(prev => ({ ...prev, [name]: 'Este campo es obligatorio.' }));
     } else {
@@ -83,7 +71,6 @@ export const Solicitud = () => {
     }
   };
 
-  // Manejo del Envío del Formulario (SweetAlert2)
   const handleSubmit = (e) => {
     e.preventDefault();
     const { isValid, errors: validationErrors } = validateForm(formData);
@@ -98,26 +85,18 @@ export const Solicitud = () => {
       return;
     }
     
-    // Notificación de Éxito de SweetAlert2 (ACTUALIZADO para usar la cuota calculada)
     Swal.fire({
-      icon: 'success',
-      title: '¡Solicitud Recibida!',
+      icon: '',
+      title: '¡Solicitud Enviada!',
       html: `
-        <p>Gracias por confiar en nosotros ${formData.fullname}. Tu solicitud de <b>${formatCurrency(formData.monto)}</b> ha sido enviada para revisión.</p>
-        <hr class="swal-separator">
-        <p class="summary-label">Tu cuota mensual estimada es:</p>
-        <h2 class="summary-value">${formatCurrency(cuotaMensual.cuota)}</h2>
-        <p class="summary-details">Tasa de referencia: ${cuotaMensual.tasa.toFixed(1)}% mensual.</p>
-      `,
+        <p>Gracias por confiar en nosotros ${formData.fullname}. Tu solicitud de <b>${formatCurrency(formData.monto)}</b> ha sido enviada para revisión.</p> `,
       confirmButtonText: 'Aceptar',
     });
     
-    // Limpiar formulario automáticamente (Requisito 3)
     setFormData(initialFormState);
     setErrors({});
   };
   
-  // Limpiar formulario con botón
   const handleClear = () => {
     setFormData(initialFormState);
     setErrors({});
@@ -131,7 +110,6 @@ export const Solicitud = () => {
           <h3>Formulario de Solicitud de Crédito</h3>
 
           <form onSubmit={handleSubmit}>
-              {/* === 1. DATOS PERSONALES === */}
               <div className="form-container">
                   <div className="form-header">
                       <h4>Datos personales</h4>
@@ -158,12 +136,10 @@ export const Solicitud = () => {
                   </div>
               </div>
 
-              {/* === 2. DATOS DEL CRÉDITO (ACTUALIZADO) === */}
               <div className="form-container">
                   <div className="form-header">
                       <h4>Datos del crédito</h4>
                       <div className="form-body">
-                          {/* Generamos las opciones del select dinámicamente desde creditsData */}
                           <label htmlFor="credit-type">Tipo de crédito:</label>
                           <select id="credit-type" name="creditType" required
                              value={formData.creditType} onChange={handleInputChange}>
@@ -195,7 +171,6 @@ export const Solicitud = () => {
                   </div>
               </div>
               
-              {/* === RESUMEN DEL CÁLCULO (ACTUALIZADO) === */}
               {cuotaMensual.cuota > 0 && (
                   <div className="form-container summary-box">
                       <div className="form-header">
@@ -210,7 +185,6 @@ export const Solicitud = () => {
               )}
 
 
-              {/* === 3. DATOS LABORALES === */}
               <div className="form-container">
                   <div className="form-header">
                       <h4>Datos laborales</h4>
@@ -230,7 +204,6 @@ export const Solicitud = () => {
                   </div>
               </div>
               
-              {/* === BOTONES DE ACCIÓN === */}
               <button type="submit" className="btn-submit">Enviar solicitud</button>
               <button type="button" onClick={handleClear} className="btn-clear">Limpiar formulario</button>
           </form>
