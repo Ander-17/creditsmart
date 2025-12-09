@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Bloquea los archivos de las claves de Firebase
+.env
+.env.local
+.env.*.local
