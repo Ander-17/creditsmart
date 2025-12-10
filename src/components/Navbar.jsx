@@ -34,6 +34,11 @@ export const Navbar = () => {
                     Solicitud Crédito
                 </Link>
             </li>
+            <li>
+                <Link to='/mis-solicitudes' className={isActive('/mis-solicitudes')}>
+                    Mis Solicitudes
+                </Link>
+            </li>
         </ul>
         </div>
     </nav>

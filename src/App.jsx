@@ -6,6 +6,7 @@ import './App.css'
 import { Home } from './pages/Home'
 import { Solicitud } from './pages/Solicitud'
 import { Simulador } from './pages/Simulador'
+import { MisSolicitudes } from './pages/MisSolicitudes'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/simulador" element={<Simulador />} />
         <Route path="/solicitud" element={<Solicitud />} />
+        <Route path="/mis-solicitudes" element={<MisSolicitudes />} />
       </Routes>
 
       <Footer />
