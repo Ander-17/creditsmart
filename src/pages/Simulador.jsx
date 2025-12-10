@@ -1,17 +1,34 @@
-import React, { useState, useMemo } from 'react';
-
-import { Hero } from '../components/Hero'; 
+import React, { useState, useMemo, useEffect } from 'react';
 import { CreditCard } from '../components/CreditCard';
-import { creditsData } from '../data/creditsData'; 
-
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const Simulador = () => {
-
   const [searchTerm, setSearchTerm] = useState('');   
   const [minAmount, setMinAmount] = useState('');   
   const [sortType, setSortType] = useState('tasa_asc'); 
+  const [dbCredits, setDbCredits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  
+  useEffect(() => {
+    const fetchCredits = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "credits"));
+        const creditsList = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setDbCredits(creditsList);
+      } catch (error) {
+        console.error("Error cargando créditos en simulador:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCredits();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'name-product') setSearchTerm(value);
@@ -19,17 +36,14 @@ export const Simulador = () => {
     if (name === 'sort-interest') setSortType(value); 
   };
   
-
   const handleClearFilters = () => {
     setSearchTerm(''); 
     setMinAmount('');   
     setSortType('tasa_asc'); 
   };
   
-
   const filteredAndSortedCredits = useMemo(() => {
-    let results = creditsData;
-    
+    let results = dbCredits; 
     
     if (searchTerm) {
       results = results.filter(credit => 
@@ -37,7 +51,6 @@ export const Simulador = () => {
       );
     }
 
-    
     const amountFilter = parseFloat(minAmount);
     if (!isNaN(amountFilter) && amountFilter > 0) {
       results = results.filter(credit => {
@@ -45,7 +58,6 @@ export const Simulador = () => {
       });
     }
     
-
     const sorted = [...results];
     if (sortType === 'tasa_asc') {
       sorted.sort((a, b) => a.interestRate - b.interestRate);
@@ -55,11 +67,10 @@ export const Simulador = () => {
 
     return sorted;
     
-  }, [searchTerm, minAmount, sortType]); 
+  }, [searchTerm, minAmount, sortType, dbCredits]); 
 
   return (
     <>
-      <Hero /> 
       
       <main className="container">
         <section className="simulator-section">
@@ -103,7 +114,6 @@ export const Simulador = () => {
 
                 </form>
                 
-
                 <button 
                     onClick={handleClearFilters}
                     className="btn-clear" 
@@ -118,25 +128,32 @@ export const Simulador = () => {
 
         <section className="results-section">
           <h3>Resultados de la búsqueda</h3>
-          <p>A continuación se muestran los {filteredAndSortedCredits.length} resultados que coinciden con tus filtros.</p>
-          
-          <div className="credits-grid">
-            
-            {filteredAndSortedCredits.length > 0 ? (
-              filteredAndSortedCredits.map((credit) => (
-                <CreditCard 
-                  key={credit.id} 
-                  credit={credit} 
-                />
-              ))
-            ) : (
 
-              <p>
-                <strong>No hay créditos disponibles</strong> que coincidan con tu búsqueda y filtros. 
-                Intenta ajustar los parámetros.
-              </p>
-            )}
-          </div>
+          {loading ? (
+             <p style={{textAlign: 'center', fontSize: '1.2rem', color: '#3a89c9'}}>
+                Cargando simulador...
+             </p>
+          ) : (
+            <>
+              <p>A continuación se muestran los {filteredAndSortedCredits.length} resultados que coinciden con tus filtros.</p>
+              
+              <div className="credits-grid">
+                {filteredAndSortedCredits.length > 0 ? (
+                  filteredAndSortedCredits.map((credit) => (
+                    <CreditCard 
+                      key={credit.id} 
+                      credit={credit} 
+                    />
+                  ))
+                ) : (
+                  <p>
+                    <strong>No hay créditos disponibles</strong> que coincidan con tu búsqueda y filtros. 
+                    Intenta ajustar los parámetros.
+                  </p>
+                )}
+              </div>
+            </>
+          )}
         </section>
       </main>
     </>

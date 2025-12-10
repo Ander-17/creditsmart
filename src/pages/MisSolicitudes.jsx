@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, where, getDocs, orderBy, limit, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { Hero } from '../components/Hero';
 import Swal from 'sweetalert2';
 
 export const MisSolicitudes = () => {
   const [emailToSearch, setEmailToSearch] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
-  const [loading, setLoading] = useState(true); // Empieza cargando al inicio
+  const [loading, setLoading] = useState(true); 
 
-  // 1. EFECTO DE CARGA INICIAL (Cargar las últimas 5 sin filtro)
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -36,13 +34,11 @@ export const MisSolicitudes = () => {
     fetchInitialData();
   }, []);
 
-  // --- FUNCIÓN BUSCAR (Filtra por email) ---
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!emailToSearch) return;
 
     setLoading(true);
-    // Limpiamos la lista actual para dar feedback de búsqueda
     setSolicitudes([]);
 
     try {
@@ -78,7 +74,6 @@ export const MisSolicitudes = () => {
     }
   };
 
-  // --- FUNCIÓN ELIMINAR ---
   const handleDelete = async (id) => {
     const result = await Swal.fire({
         title: '¿Estás seguro?',
@@ -119,7 +114,6 @@ export const MisSolicitudes = () => {
     }
   };
 
-  // --- FUNCIÓN EDITAR ---
   const handleEdit = async (solicitud) => {
     const { value: formValues } = await Swal.fire({
         title: 'Actualizar Solicitud',
@@ -161,7 +155,6 @@ export const MisSolicitudes = () => {
         try {
             const docRef = doc(db, "solicitudes", solicitud.id);
             
-            // Recálculo simple de la cuota (usando tasa fija 1.5% para simplificar actualización)
             const tasa = 1.5 / 100; 
             const n = parseInt(newPlazo);
             const P = parseFloat(newMonto);
@@ -206,7 +199,6 @@ export const MisSolicitudes = () => {
 
   return (
     <>
-      <Hero />
       <main className="container">
         <section className="form-section mis-solicitudes-section">
           <h3>Panel de Solicitudes Recientes</h3>
@@ -243,7 +235,6 @@ export const MisSolicitudes = () => {
                             <h4>{solicitud.creditType}</h4>
                         </div>
                         <div className="card-body">
-                            {/* DATOS COMPLETOS (Excepto Cédula) */}
                             <p><strong>Solicitante:</strong> {solicitud.fullname}</p>
                             <p><strong>Email:</strong> {solicitud.email}</p>
                             <p><strong>Teléfono:</strong> {solicitud.phone}</p>
