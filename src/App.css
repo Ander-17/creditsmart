@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-family: 'Times New Roman', Times, serif;
     background-color: #c3dbff;
@@ -15,12 +14,12 @@ body {
 }
 
 .container {
-    max-width: 2000px;
+    max-width: 1200px; 
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* Navegación */
+/* -- Navegación -- */
 .navbar {
     background: #288dec;
     color: #F1FAEE;
@@ -66,32 +65,70 @@ body {
     color: #000000;
 }
 
-/* Banner principal - hero */
-
-.hero {
-    width: 100%;
-    margin: 0;
+/* -- Banner principal - hero -- */
+.hero-split-container {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    
+    display: flex;
+    align-items: stretch; 
+    justify-content: space-between;
+    
+    height: 350px; 
+    
+    width: 100%;       
+    max-width: 1000px; 
+    margin: 2rem auto; 
+    
+    overflow: hidden;
     padding: 0;
-    max-width: none !important;
-    background-color: #fff;
 }
 
-.hero .container {
-    width: 100%;
-    max-width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    margin: 0;
+.hero-text-box {
+    flex: 1;
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
 }
 
-.hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    max-height: 80vh;
-    object-fit: contain;
+.hero-text-box h2 {
+    font-size: 3rem;
+    color: #003366;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
 }
 
+.hero-text-box p {
+    font-size: 1.3rem;
+    color: #555555;
+    line-height: 1.5;
+    margin-top: 1rem;
+    max-width: 95%;
+}
+
+.hero-image-box {
+    flex: 1; 
+    height: 100%; 
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;    
+    background-color: transparent; 
+    position: relative;
+    padding: 0;
+}
+
+.hero-image-box .hero-image {
+    height: 100%; 
+    width: auto; 
+    object-fit: contain; 
+    object-position: right center; 
+}
+
+/* Sección de Créditos */
 .credits-section {
     background-color: #c3dbff;
     padding: 3rem 0;
@@ -106,10 +143,11 @@ body {
 
 .credits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-bottom: 2rem;
     overflow: hidden; 
+    justify-content: center; 
 }
 
 .credit-card {
@@ -119,6 +157,12 @@ body {
     padding: 1.5rem;
     box-shadow: 0 2px 5px #cccccc;
     transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 400px; 
+    width: 100%;      
+    margin: 0 auto;   
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .credit-card:hover {
@@ -181,16 +225,27 @@ body {
     transition: all 0.3s;
 }
 
-
 .btn-primary:hover {
     background: linear-gradient(90deg, #3273b8, #3a89c9);
     transform: translateY(-2px);
 }
 
-/* Simulador de créditos */
+.loading-msg, .error-msg {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+    width: 100%;
+}
+.error-msg {
+    color: #d9534f;
+}
+.loading-msg {
+    color: #3a89c9;
+}
 
+/* Simulador de créditos */
 .simulator-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 3rem auto;
 }
 
@@ -250,7 +305,7 @@ body {
     margin-bottom: 2rem;
 }
 
-/* --- Formulario --- */
+/* -- Formulario -- */
 .form-section {
     max-width: 800px; 
     margin: 3rem auto 5rem auto; 
@@ -285,13 +340,11 @@ body {
     padding-bottom: 0.5rem;
 }
 
-/* --- Campos del formulario --- */
 .form-body form {
     display: grid;
     grid-template-columns: 1fr; 
     gap: 1rem 2rem;
 }
-
 
 label {
     display: block;
@@ -356,12 +409,11 @@ input[type="textarea"] {
 }
 
 .btn-submit:hover {
-    background-color: #001f3f;
+    background: linear-gradient(90deg, #3273b8, #3a89c9);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px #dcdcdc44;
 }
 
-/* Botón de limpiar */
 .btn-clear {
     background-color: #FFFFFF;
     color: #000000;
@@ -374,8 +426,94 @@ input[type="textarea"] {
     box-shadow: 0 4px 8px #dcdcdc44;
 }
 
-/* --- Footer --- */
+/* Mis Solicitudes */
+.mis-solicitudes-section {
+    margin-top: 2rem;
+}
 
+.search-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.results-area {
+    margin-top: 3rem;
+}
+
+.status-text {
+    color: #3a89c9;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+}
+
+.btn-action {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-edit {
+    background: linear-gradient(90deg, #3a89c9, #4bbdff);
+    color: #FFFFFF;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.swal-btn-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 1em;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.swal-btn-danger:hover {
+    background-color: #c82333 !important;
+}
+
+.swal-btn-normal {
+    background: #3a89c9 !important;
+    color: white !important;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 1em;
+    margin: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.swal-btn-normal:hover {
+    background-color: #3273b8 !important;
+}
+
+/* Footer */
 .main-footer {
     background-color: #288decbe;
     color: #FFFFFF; 
@@ -438,43 +576,75 @@ input[type="textarea"] {
     color: #FFFFFF; 
 }
 
-
-/* --- Responsividad (Móvil) --- */
-
+/* Responsividad */
 @media (max-width: 992px) {
     .navbar .container {
-    flex-direction: column;
-    text-align: center;
+        flex-direction: column;
+        gap: 1rem;
     }
 
-    .hero {
-    padding: 3rem 1rem;
+    .menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        align-items: center;
     }
 
-    .hero h2 {
-    font-size: 1.8rem;
+    .hero-image-box {
+        display: none;
     }
 
-    .credits-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    padding: 0; 
+    .hero-split-container {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+        max-width: 95%;
+        padding: 0;
     }
 
-    .credit-card {
-    padding: 1rem;
+    .hero-text-box {
+        width: 100%;
+        flex: auto;
+        padding: 3rem 2rem;
+        align-items: center;
     }
 
-    .btn-primary {
-    font-size: 0.9rem;
-    padding: 0.7rem;
-    } 
+    .hero-text-box h2,
+    .form-section h3 {
+        font-size: 2rem;
+    }
+
+    .hero-text-box p {
+        font-size: 1rem;
+    }
+    
+    .hero-logo {
+        margin-bottom: 1rem;
+    }
+
+    .form-body form {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-submit,
+    .btn-clear {
+        width: 100%;
+        max-width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
     .footer-content {
-    flex-direction: column; 
-    text-align: center; 
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2rem;
     }
 
-    .footer-section {
-    margin-bottom: 1.5rem;
-    width: 100%;
+    .contact-items {
+        justify-content: center;
     }
 }
