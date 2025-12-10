@@ -426,6 +426,28 @@ input[type="textarea"] {
     box-shadow: 0 4px 8px #dcdcdc44;
 }
 
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+    background-color: #3a89c9 !important;
+    background: linear-gradient(90deg, #3a89c9, #4bbdff) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: #fff !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+    box-shadow: 0 0 0 3px rgba(58, 137, 201, 0.5) !important;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:hover {
+    background: linear-gradient(90deg, #3273b8, #3a89c9) !important;
+    transform: translateY(-2px);
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
 /* Mis Solicitudes */
 .mis-solicitudes-section {
     margin-top: 2rem;
