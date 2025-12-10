@@ -42,7 +42,7 @@ export const Home = () => {
 
           {loading && <p className="loading-msg">Cargando productos financieros...</p>}
           
-          {error && <p className="error-msg">{error}</p>}
+          {error && <p className="error-msg">Error al cargar los productos financieros: {error}</p>}
 
           <div className="credits-grid">
             {!loading && !error && credits.map((credit) => {
